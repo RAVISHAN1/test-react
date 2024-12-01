@@ -1,5 +1,6 @@
 import React from 'react'
 import ImageSlider from './ImageSlider';
+import CustomizedTimeline from './CustomizedTimeline';
 
 const Home_2 = () => {
   return (
@@ -9,7 +10,9 @@ const Home_2 = () => {
         <div className="col-span-2 row-span-2 border">
           <ImageSlider images={images} />
         </div>
-        <div className="col-span-3 row-span-2 col-start-1 row-start-3 border">2</div>
+        <div className="col-span-3 row-span-2 col-start-1 row-start-3 border">
+          <CustomizedTimeline></CustomizedTimeline>
+        </div>
         <div className="col-start-3 row-start-1 border">3</div>
         <div className="col-start-3 row-start-2 border">4</div>
         <div className="col-span-2 row-span-3 col-start-2 row-start-5 border">5</div>

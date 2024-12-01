@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 
-const ImageSlider = ({ images, autoSlideInterval = 4000 }) => {
+const ImageSlider = ({ images, autoSlideInterval = 5000 }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     // Navigate to the previous image
