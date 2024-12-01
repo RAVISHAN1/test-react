@@ -1,32 +1,23 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import LoginBoxed from './pages/Authentication/LoginBoxed';
+import About from './pages/Authentication/LoginBoxed';
+import Contact from './pages/Authentication/LoginBoxed';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <div className="flex items-center justify-center h-screen bg-blue-500">
-          <h1 className="text-red-600 text-4xl font-bold">Hello, Tailwind CSS!</h1>
-        </div>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Router>
+      {/* <nav className="flex justify-center space-x-4 p-4 bg-gray-800 text-white">
+        <Link to="/" className="hover:text-blue-400">LoginBoxed</Link>
+        <Link to="/about" className="hover:text-blue-400">About</Link>
+        <Link to="/contact" className="hover:text-blue-400">Contact</Link>
+      </nav> */}
+      <Routes>
+        <Route path="/" element={<LoginBoxed />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
