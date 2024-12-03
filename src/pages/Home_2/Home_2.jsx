@@ -2,7 +2,8 @@ import React from 'react'
 import ImageSlider from './ImageSlider';
 import CustomizedTimeline from './CustomizedTimeline';
 import ImageMasonry from './ImageMasonry';
-import { Container } from '@mui/material';
+import { Button, Checkbox, Container, FormControlLabel } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const Home_2 = () => {
   return (
@@ -14,7 +15,11 @@ const Home_2 = () => {
               <ImageSlider images={images} />
             </div>
             <div className="md:w-1/4 border">
-              <div className="h-1/2 border">1</div>
+              <div className="h-1/2 border">
+                <Button variant="outlined">
+                  <Link to="/Home_2/products">csc</Link>
+                </Button>
+              </div>
               <div className="h-1/2 border">2</div>
             </div>
           </div>
@@ -25,6 +30,7 @@ const Home_2 = () => {
 
           <div className="mt-4 border">
             <CustomizedTimeline></CustomizedTimeline>
+            {/* <FormControlLabel control={<Checkbox defaultChecked />} label="ccc" /> */}
           </div>
         </div>
 
