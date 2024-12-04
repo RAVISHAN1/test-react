@@ -18,7 +18,6 @@ function Home() {
       <Categories></Categories>
       <ProductSection></ProductSection>
       <BannerSection></BannerSection>
-      <BannerSection></BannerSection>
       <TrendSection></TrendSection>
       <DiscountSection></DiscountSection>
       <ServicesSection></ServicesSection>
