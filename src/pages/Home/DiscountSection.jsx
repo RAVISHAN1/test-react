@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import discount from '../../assets/img/discount.jpg'
 
 const DiscountSection = () => {
     return (
@@ -8,7 +9,7 @@ const DiscountSection = () => {
                     <div class="row">
                         <div class="col-lg-6 p-0">
                             <div class="discount__pic">
-                                <img src="img/discount.jpg" alt="" />
+                                <img src={discount} alt="" />
                             </div>
                         </div>
                         <div class="col-lg-6 p-0">
