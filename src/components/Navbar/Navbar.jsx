@@ -25,7 +25,7 @@ const Navbar = () => {
                                         <Link to="#">Pages</Link>
                                         <ul className="dropdown">
                                             <li><Link to="/product-details">Product Details</Link></li>
-                                            <li><Link to="/shop-cart">Shop Cart</Link></li>
+                                            <li><Link to="/cart">Shop Cart</Link></li>
                                             <li><Link to="/checkout">Checkout</Link></li>
                                             <li><Link to="/blog-details">Blog Details</Link></li>
                                         </ul>
