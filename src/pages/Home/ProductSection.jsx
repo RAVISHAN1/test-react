@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaExpand, FaHeart, FaShoppingBag } from 'react-icons/fa';
 import product1 from '../../assets/img/product/product-1.jpg';
 import product2 from '../../assets/img/product/product-2.jpg';
 import product3 from '../../assets/img/product/product-3.jpg';
@@ -48,17 +49,17 @@ const ProductSection = () => {
                                     <ul className="product__hover">
                                         <li>
                                             <a href={product.image} className="image-popup">
-                                                <span className="arrow_expand"></span>
+                                                <span><FaExpand size={18} /></span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <span className="icon_heart_alt"></span>
+                                                <FaHeart size={18} />
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <span className="icon_bag_alt"></span>
+                                                <FaShoppingBag size={18} />
                                             </a>
                                         </li>
                                     </ul>

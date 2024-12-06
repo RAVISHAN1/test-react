@@ -1247,6 +1247,7 @@ ol {
 }
 
 .product__hover li:hover a {
+    color: #fff;
     background: #ca1515;
 }
 
@@ -1258,13 +1259,13 @@ ol {
 }
 
 .product__hover li a {
-    font-size: 18px;
+    /* font-size: 18px; */
     color: #111111;
     display: block;
     height: 45px;
     width: 45px;
     background: #ffffff;
-    line-height: 48px;
+    line-height: 40px;
     text-align: center;
     border-radius: 50%;
     -webkit-transition: all, 0.5s;
