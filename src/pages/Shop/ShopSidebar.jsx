@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 
 const ShopSidebar = () => {
+    const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
+
+    const toggleCategoriesAccordion = (index) => {
+        setActiveCategoryIndex(activeCategoryIndex === index ? -1 : index);
+    };
+
     const [categories] = useState([
         { title: "Women", items: ["Coats", "Jackets", "Dresses", "Shirts", "T-shirts", "Jeans"] },
         { title: "Men", items: ["Coats", "Jackets", "Dresses", "Shirts", "T-shirts", "Jeans"] },
@@ -35,17 +41,16 @@ const ShopSidebar = () => {
                             <div className="card" key={index}>
                                 <div className="card-heading">
                                     <a
-                                        data-toggle="collapse"
-                                        data-target={`#collapse${index}`}
-                                        className={index === 0 ? "active" : ""}
+                                        onClick={() => toggleCategoriesAccordion(index)}
+                                        className={activeCategoryIndex === index ? "active" : ""}
+                                        style={{ cursor: "pointer" }}
                                     >
                                         {category.title}
                                     </a>
                                 </div>
                                 <div
                                     id={`collapse${index}`}
-                                    className={`collapse ${index === 0 ? "show" : ""}`}
-                                    data-parent="#accordionExample"
+                                    className={`collapse ${activeCategoryIndex === index ? "show" : ""}`}
                                 >
                                     <div className="card-body">
                                         <ul>
@@ -92,7 +97,7 @@ const ShopSidebar = () => {
                 </div>
                 <div className="size__list">
                     {sizes.map((size, index) => (
-                        <label htmlFor={size} key={index}>
+                        <label className="mb-1" htmlFor={size} key={index}>
                             {size}
                             <input type="checkbox" id={size} />
                             <span className="checkmark"></span>
@@ -108,7 +113,7 @@ const ShopSidebar = () => {
                 </div>
                 <div className="size__list color__list">
                     {colors.map((color) => (
-                        <label htmlFor={color.id} key={color.id}>
+                        <label className="mb-1" htmlFor={color.id} key={color.id}>
                             {color.name}
                             <input type="checkbox" id={color.id} />
                             <span className="checkmark"></span>
