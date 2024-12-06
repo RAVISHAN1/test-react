@@ -29,7 +29,7 @@ const TrendSection = () => {
                                             <h6>{product.name}</h6>
                                             <div className="rating">
                                                 {[...Array(product.rating)].map((_, index) => (
-                                                    <i className="fa fa-star" key={index}></i>
+                                                    <i className="fa fa-star me-1" key={index}></i>
                                                 ))}
                                             </div>
                                             <div className="product__price">{product.price}</div>

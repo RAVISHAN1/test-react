@@ -69,7 +69,7 @@ const ProductSection = () => {
                                     </h6>
                                     <div className="rating">
                                         {[...Array(product.rating)].map((_, index) => (
-                                            <i key={index} className="fa fa-star"></i>
+                                            <i key={index} className="fa fa-star me-1"></i>
                                         ))}
                                     </div>
                                     <div className="product__price">
