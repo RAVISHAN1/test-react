@@ -13,7 +13,7 @@ import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 
 function Shop() {
     const breadcrumbLinks = [
-        { label: 'Home', url: './index.html', icon: 'fa-home' },
+        { label: 'Home', url: './', icon: 'fa-home' },
         { label: 'Shop' }
     ];
 
