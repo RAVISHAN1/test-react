@@ -1,22 +1,30 @@
-import React from 'react'
+import React from 'react';
 
-const Breadcrumb = () => {
+const Breadcrumb = ({ links = [] }) => {
     return (
-        <>
-            <div class="breadcrumb-option">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="breadcrumb__links">
-                                <a href="./index.html"><i class="fa fa-home"></i> Home</a>
-                                <span>Shop</span>
-                            </div>
+        <div className="breadcrumb-option">
+            <div className="container">
+                <div className="row">
+                    <div className="col-lg-12">
+                        <div className="breadcrumb__links">
+                            {links.map((link, index) => (
+                                <React.Fragment key={index}>
+                                    {link.url ? (
+                                        <a href={link.url}>
+                                            {link.icon && <i className={`fa ${link.icon}`}></i>} {link.label}
+                                        </a>
+                                    ) : (
+                                        <span>{link.label}</span>
+                                    )}
+                                    {index < links.length - 1 && <span> </span>}
+                                </React.Fragment>
+                            ))}
                         </div>
                     </div>
                 </div>
             </div>
-        </>
-    )
-}
+        </div>
+    );
+};
 
-export default Breadcrumb
+export default Breadcrumb;

@@ -12,9 +12,14 @@ import shop9 from '../../assets/img/shop/shop-9.jpg';
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 
 function Shop() {
+    const breadcrumbLinks = [
+        { label: 'Home', url: './index.html', icon: 'fa-home' },
+        { label: 'Shop' }
+    ];
+
     return (
         <>
-            <Breadcrumb></Breadcrumb>
+            <Breadcrumb links={breadcrumbLinks} />
 
             <section className="shop spad">
                 <div className="container">
