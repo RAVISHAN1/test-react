@@ -14,9 +14,6 @@ export const getProductsCategories = async () => {
             { id: "reds", name: "Reds" },
             { id: "greys", name: "Greys" },
             { id: "blues", name: "Blues" },
-            { id: "beige", name: "Beige Tones" },
-            { id: "greens", name: "Greens" },
-            { id: "yellows", name: "Yellows" },
         ],
     };
 

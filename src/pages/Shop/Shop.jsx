@@ -38,7 +38,7 @@ function Shop() {
     useEffect(() => {
         const fetchProducts = async (page) => {
             try {
-                const response = await getProductsList(page);
+                const response = await getProductsList(filters, page);
                 setProducts(response.products);
                 setPagination({
                     currentPage: response.currentPage,
@@ -51,7 +51,7 @@ function Shop() {
 
         const page = parseInt(searchParams.get("page")) || 1;
         fetchProducts(page);
-    }, [searchParams]);
+    }, [filters]);
 
     // Handle page change
     const handlePageChange = (page) => {
@@ -143,6 +143,9 @@ function Shop() {
                                             <div className="product__item__text">
                                                 <h6>
                                                     <a href="#">{product.name}</a>
+                                                    <br /><span>{product.category}</span>
+                                                    <br /><span>{product.size}</span>
+                                                    <br /><span>{product.color}</span>
                                                 </h6>
                                                 <div className="rating">
                                                     {Array(product.rating)

@@ -30,7 +30,7 @@ const productImages = [shop1, shop2, shop3, shop4, shop5, shop6, shop7, shop8, s
 // Function to get random item from an array
 const getRandomItem = (array) => array[Math.floor(Math.random() * array.length)];
 
-export const getProductsList = async (page = 1) => {
+export const getProductsList = async (filters, page = 1) => {
     const storageKey = "PRODUCTS_LIST";
     const savedProducts = localStorage.getItem(storageKey);
     const productsPerPage = 9;
@@ -58,6 +58,10 @@ export const getProductsList = async (page = 1) => {
                 image: randomImage,
                 label: randomLabel,
                 rating: randomRating,
+
+                category: getRandomItem(["Coats", "Jackets", "Dresses", "Shirts", "T-shirts", "Jeans"]),
+                size: getRandomItem(["xxs", "xs", "xs-s", "s", "m", "m-l", "l", "xl"]),
+                color: getRandomItem(["black", "whites", "reds", "greys", "blues"]),
             });
         }
 
@@ -65,15 +69,58 @@ export const getProductsList = async (page = 1) => {
         localStorage.setItem(storageKey, JSON.stringify(products));
     }
 
-    // Paginate the products
-    const startIndex = (page - 1) * productsPerPage;
-    const paginatedProducts = products.slice(startIndex, startIndex + productsPerPage);
+    // Apply filters to the products
+    let filteredProducts = products;
 
-    // Return the paginated products along with metadata
+    if (filters) {
+        if (filters.categories.length > 0) {
+            filteredProducts = filteredProducts.filter(product =>
+                filters.categories.some(category =>
+                    product.category.toLowerCase().includes(category.toLowerCase())
+                )
+            );
+        }
+
+        // if (filters.priceRange) {
+        //     filteredProducts = filteredProducts.filter(product =>
+        //         product.price >= filters.priceRange.min &&
+        //         product.price <= filters.priceRange.max
+        //     );
+        // }
+
+        if (filters.sizes.length > 0) {
+            filteredProducts = filteredProducts.filter(product =>
+                filters.sizes.some(size =>
+                    product.size.toLowerCase().includes(size.toLowerCase())
+                )
+            );
+        }
+
+        if (filters.colors.length > 0) {
+            filteredProducts = filteredProducts.filter(product =>
+                filters.colors.some(color =>
+                    product.color.toLowerCase().includes(color.toLowerCase())
+                )
+            );
+        }
+
+        // if (filters.rating) {
+        //     filteredProducts = filteredProducts.filter(product =>
+        //         product.rating >= filters.rating
+        //     );
+        // }
+    }
+
+    // Paginate the filtered products
+    const startIndex = (page - 1) * productsPerPage;
+    const paginatedProducts = filteredProducts.slice(startIndex, startIndex + productsPerPage);
+
+    // Return the paginated and filtered products along with metadata
     return {
         products: paginatedProducts,
-        total: products.length,
+        total: filteredProducts.length,
         currentPage: page,
-        totalPages: Math.ceil(products.length / productsPerPage),
+        totalPages: Math.ceil(filteredProducts.length / productsPerPage),
     };
 };
+
