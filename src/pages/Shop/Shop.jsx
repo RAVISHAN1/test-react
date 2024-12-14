@@ -32,7 +32,6 @@ function Shop() {
             },
         };
         setFilters(urlFilters);
-        // console.log(urlFilters);
     }, [searchParams]);
 
     // Fetch products on page change
@@ -69,21 +68,21 @@ function Shop() {
 
         // Append categories as a comma-separated string
         if (newFilters.categories.length) {
-            newFilters.categories.forEach(category => {
+            newFilters.categories.forEach((category) => {
                 params.append("categories", category); // Append each category individually
             });
         }
 
         // Append sizes as a comma-separated string
         if (newFilters.sizes.length) {
-            newFilters.sizes.forEach(size => {
+            newFilters.sizes.forEach((size) => {
                 params.append("sizes", size); // Append each size individually
             });
         }
 
         // Append colors as a comma-separated string
         if (newFilters.colors.length) {
-            newFilters.colors.forEach(color => {
+            newFilters.colors.forEach((color) => {
                 params.append("colors", color); // Append each color individually
             });
         }
@@ -163,88 +162,11 @@ function Shop() {
                                     </div>
                                 ))}
                                 <div className="col-lg-12 text-center">
-                                    {/* <div className="pagination__option">
-                                        {Array.from({ length: pagination.totalPages }).map((_, index) => (
-                                            <a
-                                                key={index}
-                                                href="#"
-                                                className={pagination.currentPage === index + 1 ? "active" : ""}
-                                                onClick={(e) => {
-                                                    e.preventDefault();
-                                                    handlePageChange(index + 1);
-                                                }}
-                                            >
-                                                {index + 1}
-                                            </a>
-                                        ))}
-                                    </div> */}
-
-                                    <div className="pagination__option">
-                                        {/* Previous Arrow */}
-                                        <a
-                                            href="#"
-                                            className={pagination.currentPage === 1 ? "disabled" : ""}
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                if (pagination.currentPage > 1) handlePageChange(pagination.currentPage - 1);
-                                            }}
-                                        >
-                                            &lt;
-                                        </a>
-
-                                        {/* Pagination Numbers */}
-                                        {Array.from({ length: pagination.totalPages }).map((_, index) => {
-                                            const page = index + 1;
-
-                                            // Show first two, last two, and two around the current page
-                                            if (
-                                                page === 1 ||
-                                                page === pagination.totalPages ||
-                                                (page >= pagination.currentPage - 2 && page <= pagination.currentPage + 2)
-                                            ) {
-                                                return (
-                                                    <a
-                                                        key={index}
-                                                        href="#"
-                                                        className={pagination.currentPage === page ? "active" : ""}
-                                                        onClick={(e) => {
-                                                            e.preventDefault();
-                                                            handlePageChange(page);
-                                                        }}
-                                                    >
-                                                        {page}
-                                                    </a>
-                                                );
-                                            }
-
-                                            // Add ellipsis
-                                            if (
-                                                (page === pagination.currentPage - 3 && page !== 1) ||
-                                                (page === pagination.currentPage + 3 && page !== pagination.totalPages)
-                                            ) {
-                                                return (
-                                                    <span key={index} className="ellipsis">
-                                                        ...
-                                                    </span>
-                                                );
-                                            }
-
-                                            return null; // Skip pages outside the range
-                                        })}
-
-                                        {/* Next Arrow */}
-                                        <a
-                                            href="#"
-                                            className={pagination.currentPage === pagination.totalPages ? "disabled" : ""}
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                if (pagination.currentPage < pagination.totalPages) handlePageChange(pagination.currentPage + 1);
-                                            }}
-                                        >
-                                            &gt;
-                                        </a>
-                                    </div>
-
+                                    <Pagination
+                                        currentPage={pagination.currentPage}
+                                        totalPages={pagination.totalPages}
+                                        onPageChange={handlePageChange}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -252,6 +174,76 @@ function Shop() {
                 </div>
             </section>
         </>
+    );
+}
+
+function Pagination({ currentPage, totalPages, onPageChange }) {
+    return (
+        <div className="pagination__option">
+            {/* Previous Arrow */}
+            <a
+                href="#"
+                className={currentPage === 1 ? "disabled" : ""}
+                onClick={(e) => {
+                    e.preventDefault();
+                    if (currentPage > 1) onPageChange(currentPage - 1);
+                }}
+            >
+                &lt;
+            </a>
+
+            {/* Pagination Numbers */}
+            {Array.from({ length: totalPages }).map((_, index) => {
+                const page = index + 1;
+
+                // Show first two, last two, and two around the current page
+                if (
+                    page === 1 ||
+                    page === totalPages ||
+                    (page >= currentPage - 2 && page <= currentPage + 2)
+                ) {
+                    return (
+                        <a
+                            key={index}
+                            href="#"
+                            className={currentPage === page ? "active" : ""}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                onPageChange(page);
+                            }}
+                        >
+                            {page}
+                        </a>
+                    );
+                }
+
+                // Add ellipsis
+                if (
+                    (page === currentPage - 3 && page !== 1) ||
+                    (page === currentPage + 3 && page !== totalPages)
+                ) {
+                    return (
+                        <span key={index} className="ellipsis">
+                            ...
+                        </span>
+                    );
+                }
+
+                return null; // Skip pages outside the range
+            })}
+
+            {/* Next Arrow */}
+            <a
+                href="#"
+                className={currentPage === totalPages ? "disabled" : ""}
+                onClick={(e) => {
+                    e.preventDefault();
+                    if (currentPage < totalPages) onPageChange(currentPage + 1);
+                }}
+            >
+                &gt;
+            </a>
+        </div>
     );
 }
 
