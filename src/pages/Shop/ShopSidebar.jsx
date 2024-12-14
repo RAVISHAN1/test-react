@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getProductsCategories } from "../../api/testing/productsFilters";
 
-const ShopSidebar = ({ filters, onFilterChange }) => {
+const ShopSidebar = ({ filters, setFilters, setSearchParams }) => {
     const [categories, setCategories] = useState([]);
     const [sizes, setSizes] = useState([]);
     const [colors, setColors] = useState([]);
@@ -27,7 +27,46 @@ const ShopSidebar = ({ filters, onFilterChange }) => {
             ? filters[filterType].filter((item) => item !== value)
             : Array.from(new Set([...filters[filterType], value]));
 
-        onFilterChange({ ...filters, [filterType]: updatedFilter });
+        updateFilters({ ...filters, [filterType]: updatedFilter });
+    };
+
+    // Update filters and URL on sidebar changes
+    const updateFilters = (newFilters) => {
+        setFilters(newFilters);
+
+        const params = new URLSearchParams();
+
+        // Append categories as a comma-separated string
+        if (newFilters.categories.length) {
+            newFilters.categories.forEach((category) => {
+                params.append("categories", category); // Append each category individually
+            });
+        }
+
+        // Append sizes as a comma-separated string
+        if (newFilters.sizes.length) {
+            newFilters.sizes.forEach((size) => {
+                params.append("sizes", size); // Append each size individually
+            });
+        }
+
+        // Append colors as a comma-separated string
+        if (newFilters.colors.length) {
+            newFilters.colors.forEach((color) => {
+                params.append("colors", color); // Append each color individually
+            });
+        }
+
+        // Append price range values if provided
+        if (newFilters.priceRange.min) {
+            params.append("minPrice", newFilters.priceRange.min);
+        }
+        if (newFilters.priceRange.max) {
+            params.append("maxPrice", newFilters.priceRange.max);
+        }
+
+        // Update the URL search params
+        setSearchParams(params);
     };
 
     const toggleCategoriesAccordion = (index) => {

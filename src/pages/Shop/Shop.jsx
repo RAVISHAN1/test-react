@@ -62,45 +62,6 @@ function Shop() {
         setSearchParams(params);
     };
 
-    // Update filters and URL on sidebar changes
-    const updateFilters = (newFilters) => {
-        setFilters(newFilters);
-
-        const params = new URLSearchParams();
-
-        // Append categories as a comma-separated string
-        if (newFilters.categories.length) {
-            newFilters.categories.forEach((category) => {
-                params.append("categories", category); // Append each category individually
-            });
-        }
-
-        // Append sizes as a comma-separated string
-        if (newFilters.sizes.length) {
-            newFilters.sizes.forEach((size) => {
-                params.append("sizes", size); // Append each size individually
-            });
-        }
-
-        // Append colors as a comma-separated string
-        if (newFilters.colors.length) {
-            newFilters.colors.forEach((color) => {
-                params.append("colors", color); // Append each color individually
-            });
-        }
-
-        // Append price range values if provided
-        if (newFilters.priceRange.min) {
-            params.append("minPrice", newFilters.priceRange.min);
-        }
-        if (newFilters.priceRange.max) {
-            params.append("maxPrice", newFilters.priceRange.max);
-        }
-
-        // Update the URL search params
-        setSearchParams(params);
-    };
-
     return (
         <>
             <Breadcrumb links={breadcrumbLinks} />
@@ -108,7 +69,7 @@ function Shop() {
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-3 col-md-3">
-                            <ShopSidebar filters={filters} onFilterChange={updateFilters} />
+                            <ShopSidebar filters={filters} setFilters={setFilters} setSearchParams={setSearchParams} />
                         </div>
                         <div className="col-lg-9 col-md-9">
                             <div className="row">
