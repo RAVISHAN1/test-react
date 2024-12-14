@@ -25,12 +25,12 @@ function Shop() {
     // Update filters based on URL
     useEffect(() => {
         const urlFilters = {
-            categories: searchParams.getAll("categories"),
-            sizes: searchParams.getAll("sizes"),
-            colors: searchParams.getAll("colors"),
+            categories: searchParams.get("categories")?.split(",") || [], // Convert comma-separated to array
+            sizes: searchParams.get("sizes")?.split(",") || [],
+            colors: searchParams.get("colors")?.split(",") || [],
             priceRange: {
-                min: searchParams.get("minPrice"),
-                max: searchParams.get("maxPrice"),
+                min: searchParams.get("minPrice") || "",
+                max: searchParams.get("maxPrice") || "",
             },
         };
         setFilters(urlFilters);

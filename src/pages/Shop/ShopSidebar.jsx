@@ -36,38 +36,33 @@ const ShopSidebar = ({ filters, setFilters, setSearchParams }) => {
 
         const params = new URLSearchParams();
 
-        // Append categories as a comma-separated string
+        // Convert categories array to a comma-separated string
         if (newFilters.categories.length) {
-            newFilters.categories.forEach((category) => {
-                params.append("categories", category); // Append each category individually
-            });
+            params.set("categories", newFilters.categories.join(","));
         }
 
-        // Append sizes as a comma-separated string
+        // Convert sizes array to a comma-separated string
         if (newFilters.sizes.length) {
-            newFilters.sizes.forEach((size) => {
-                params.append("sizes", size); // Append each size individually
-            });
+            params.set("sizes", newFilters.sizes.join(","));
         }
 
-        // Append colors as a comma-separated string
+        // Convert colors array to a comma-separated string
         if (newFilters.colors.length) {
-            newFilters.colors.forEach((color) => {
-                params.append("colors", color); // Append each color individually
-            });
+            params.set("colors", newFilters.colors.join(","));
         }
 
         // Append price range values if provided
         if (newFilters.priceRange.min) {
-            params.append("minPrice", newFilters.priceRange.min);
+            params.set("minPrice", newFilters.priceRange.min);
         }
         if (newFilters.priceRange.max) {
-            params.append("maxPrice", newFilters.priceRange.max);
+            params.set("maxPrice", newFilters.priceRange.max);
         }
 
         // Update the URL search params
         setSearchParams(params);
     };
+
 
     const toggleCategoriesAccordion = (index) => {
         setActiveCategoryIndex(activeCategoryIndex === index ? -1 : index);
