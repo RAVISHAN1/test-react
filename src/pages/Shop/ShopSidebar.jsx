@@ -1,39 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { getProductsCategories } from "../../api/testing/productsFilters";
 
 const ShopSidebar = ({ filters, onFilterChange }) => {
+    const [categories, setCategories] = useState([]);
+    const [sizes, setSizes] = useState([]);
+    const [colors, setColors] = useState([]);
     const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
 
-    const toggleCategoriesAccordion = (index) => {
-        setActiveCategoryIndex(activeCategoryIndex === index ? -1 : index);
+    const fetchFilter = async () => {
+        try {
+            const response = await getProductsCategories(filters);
+            setCategories(response.filterCategories);
+            setSizes(response.filterSizes);
+            setColors(response.filterColors);
+        } catch (error) {
+            console.error("Error fetching filters:", error);
+        }
     };
 
-    const [categories] = useState([
-        { title: "Women", items: ["Coats", "Jackets", "Dresses", "Shirts", "T-shirts", "Jeans"] },
-        { title: "Men", items: ["Coats", "Jackets", "Dresses", "Shirts", "T-shirts", "Jeans"] },
-        { title: "Kids", items: ["Coats", "Jackets", "Dresses", "Shirts", "T-shirts", "Jeans"] },
-        { title: "Accessories", items: ["Coats", "Jackets", "Dresses", "Shirts", "T-shirts", "Jeans"] },
-        { title: "Cosmetic", items: ["Coats", "Jackets", "Dresses", "Shirts", "T-shirts", "Jeans"] },
-    ]);
-
-    const [sizes] = useState(["xxs", "xs", "xs-s", "s", "m", "m-l", "l", "xl"]);
-
-    const [colors] = useState([
-        { id: "black", name: "Blacks" },
-        { id: "whites", name: "Whites" },
-        { id: "reds", name: "Reds" },
-        { id: "greys", name: "Greys" },
-        { id: "blues", name: "Blues" },
-        { id: "beige", name: "Beige Tones" },
-        { id: "greens", name: "Greens" },
-        { id: "yellows", name: "Yellows" },
-    ]);
+    useEffect(() => {
+        fetchFilter();
+    }, [filters]);
 
     const toggleFilter = (filterType, value) => {
         const updatedFilter = filters[filterType].includes(value)
-            ? filters[filterType].filter((item) => item !== value) // Remove the value if it already exists
-            : Array.from(new Set([...filters[filterType], value])); // Add the value and ensure uniqueness
+            ? filters[filterType].filter((item) => item !== value)
+            : Array.from(new Set([...filters[filterType], value]));
 
         onFilterChange({ ...filters, [filterType]: updatedFilter });
+    };
+
+    const toggleCategoriesAccordion = (index) => {
+        setActiveCategoryIndex(activeCategoryIndex === index ? -1 : index);
     };
 
     return (
