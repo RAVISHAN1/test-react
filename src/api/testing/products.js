@@ -76,7 +76,7 @@ export const getProductsList = async (filters, page = 1) => {
         if (filters.categories.length > 0) {
             filteredProducts = filteredProducts.filter(product =>
                 filters.categories.some(category =>
-                    product.category.toLowerCase().includes(category.toLowerCase())
+                    product.category.toLowerCase() === category.toLowerCase()
                 )
             );
         }
@@ -91,7 +91,7 @@ export const getProductsList = async (filters, page = 1) => {
         if (filters.sizes.length > 0) {
             filteredProducts = filteredProducts.filter(product =>
                 filters.sizes.some(size =>
-                    product.size.toLowerCase().includes(size.toLowerCase())
+                    product.size.toLowerCase() === size.toLowerCase()
                 )
             );
         }
@@ -99,7 +99,7 @@ export const getProductsList = async (filters, page = 1) => {
         if (filters.colors.length > 0) {
             filteredProducts = filteredProducts.filter(product =>
                 filters.colors.some(color =>
-                    product.color.toLowerCase().includes(color.toLowerCase())
+                    product.color.toLowerCase() === color.toLowerCase()
                 )
             );
         }
