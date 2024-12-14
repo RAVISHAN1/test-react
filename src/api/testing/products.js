@@ -8,79 +8,72 @@ import shop7 from '../../assets/img/shop/shop-7.jpg';
 import shop8 from '../../assets/img/shop/shop-8.jpg';
 import shop9 from '../../assets/img/shop/shop-9.jpg';
 
-export const getProductsList = async (clientId) => {
+// Array of random product names
+const productNames = [
+    "Furry hooded parka",
+    "Flowy striped skirt",
+    "Croc-effect bag",
+    "Dark wash Xavi jeans",
+    "Ankle-cuff sandals",
+    "Contrasting sunglasses",
+    "Circular pendant earrings",
+    "Cotton T-Shirt",
+    "Water resistant zips backpack",
+];
 
-    const products = [
-        {
-            id: 1,
-            name: "Furry hooded parka",
-            price: 59.0,
-            image: shop1,
-            label: "New",
-            rating: 5,
-        },
-        {
-            id: 2,
-            name: "Flowy striped skirt",
-            price: 49.0,
-            image: shop2,
-            rating: 5,
-        },
-        {
-            id: 3,
-            name: "Croc-effect bag",
-            price: 59.0,
-            image: shop3,
-            rating: 5,
-        },
-        {
-            id: 4,
-            name: "Dark wash Xavi jeans",
-            price: 59.0,
-            image: shop4,
-            rating: 5,
-        },
-        {
-            id: 5,
-            name: "Ankle-cuff sandals",
-            price: 49.0,
-            originalPrice: 59.0,
-            image: shop5,
-            label: "Sale",
-            rating: 5,
-        },
-        {
-            id: 6,
-            name: "Contrasting sunglasses",
-            price: 59.0,
-            image: shop6,
-            rating: 5,
-        },
-        {
-            id: 7,
-            name: "Circular pendant earrings",
-            price: 59.0,
-            image: shop7,
-            rating: 5,
-        },
-        {
-            id: 8,
-            name: "Cotton T-Shirt",
-            price: 59.0,
-            image: shop8,
-            label: "Out Of Stock",
-            rating: 5,
-        },
-        {
-            id: 9,
-            name: "Water resistant zips backpack",
-            price: 49.0,
-            originalPrice: 59.0,
-            image: shop9,
-            label: "Sale",
-            rating: 5,
-        },
-    ];
+// Array of possible labels
+const productLabels = ["New", "Sale", "Out Of Stock", null];
 
-    return products;
+// Array of images
+const productImages = [shop1, shop2, shop3, shop4, shop5, shop6, shop7, shop8, shop9];
+
+// Function to get random item from an array
+const getRandomItem = (array) => array[Math.floor(Math.random() * array.length)];
+
+export const getProductsList = async (page = 1) => {
+    const storageKey = "PRODUCTS_LIST";
+    const savedProducts = localStorage.getItem(storageKey);
+    const productsPerPage = 9;
+
+    let products;
+
+    if (savedProducts) {
+        // Parse the saved products from localStorage
+        products = JSON.parse(savedProducts);
+    } else {
+        // Generate 1000 products dynamically
+        products = [];
+        for (let i = 1; i <= 1000; i++) {
+            const randomName = getRandomItem(productNames);
+            const randomPrice = (Math.random() * 100 + 10).toFixed(2); // Random price between $10 and $110
+            const randomImage = getRandomItem(productImages);
+            const randomLabel = getRandomItem(productLabels);
+            const randomRating = Math.floor(Math.random() * 5) + 1; // Random rating between 1 and 5
+
+            products.push({
+                id: i,
+                name: `${randomName} #${i}`,
+                price: parseFloat(randomPrice),
+                originalPrice: Math.random() > 0.5 ? (randomPrice * 1.2) : null, // 50% chance of having an original price
+                image: randomImage,
+                label: randomLabel,
+                rating: randomRating,
+            });
+        }
+
+        // Store the generated products in localStorage
+        localStorage.setItem(storageKey, JSON.stringify(products));
+    }
+
+    // Paginate the products
+    const startIndex = (page - 1) * productsPerPage;
+    const paginatedProducts = products.slice(startIndex, startIndex + productsPerPage);
+
+    // Return the paginated products along with metadata
+    return {
+        products: paginatedProducts,
+        total: products.length,
+        currentPage: page,
+        totalPages: Math.ceil(products.length / productsPerPage),
+    };
 };

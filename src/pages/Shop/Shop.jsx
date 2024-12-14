@@ -6,6 +6,7 @@ import { useSearchParams } from "react-router-dom";
 
 function Shop() {
     const [products, setProducts] = useState([]);
+    const [page, setPage] = useState(1);
     const [filters, setFilters] = useState({
         categories: [],
         sizes: [],
@@ -36,10 +37,11 @@ function Shop() {
 
     // Fetch products based on filters
     useEffect(() => {
-        const fetchProducts = async () => {
+        const fetchProducts = async (page) => {
             try {
-                const response = await getProductsList(filters);
-                setProducts(response);
+                const response = await getProductsList(page);
+                // console.log(response);
+                setProducts(response.products);
             } catch (error) {
                 console.error("Error fetching products:", error);
             }
