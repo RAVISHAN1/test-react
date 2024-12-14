@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const ShopSidebar = () => {
+const ShopSidebar = ({ filters, onFilterChange }) => {
     const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
 
     const toggleCategoriesAccordion = (index) => {
@@ -27,6 +27,14 @@ const ShopSidebar = () => {
         { id: "greens", name: "Greens" },
         { id: "yellows", name: "Yellows" },
     ]);
+
+    const toggleFilter = (filterType, value) => {
+        const updatedFilter = filters[filterType].includes(value)
+            ? filters[filterType].filter((item) => item !== value) // Remove the value if it already exists
+            : Array.from(new Set([...filters[filterType], value])); // Add the value and ensure uniqueness
+
+        onFilterChange({ ...filters, [filterType]: updatedFilter });
+    };
 
     return (
         <div className="shop__sidebar">
@@ -56,7 +64,14 @@ const ShopSidebar = () => {
                                         <ul>
                                             {category.items.map((item, itemIndex) => (
                                                 <li key={itemIndex}>
-                                                    <a href="#">{item}</a>
+                                                    <label>
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={filters.categories.includes(item)}
+                                                            onChange={() => toggleFilter("categories", item)}
+                                                        />
+                                                        {item}
+                                                    </label>
                                                 </li>
                                             ))}
                                         </ul>
@@ -99,7 +114,11 @@ const ShopSidebar = () => {
                     {sizes.map((size, index) => (
                         <label className="mb-1" htmlFor={size} key={index}>
                             {size}
-                            <input type="checkbox" id={size} />
+                            <input type="checkbox"
+                                id={size}
+                                checked={filters.sizes.includes(size)}
+                                onChange={() => toggleFilter("sizes", size)}
+                            />
                             <span className="checkmark"></span>
                         </label>
                     ))}
@@ -115,7 +134,11 @@ const ShopSidebar = () => {
                     {colors.map((color) => (
                         <label className="mb-1" htmlFor={color.id} key={color.id}>
                             {color.name}
-                            <input type="checkbox" id={color.id} />
+                            <input type="checkbox"
+                                id={color.id}
+                                checked={filters.colors.includes(color.name)}
+                                onChange={() => toggleFilter("colors", color.name)}
+                            />
                             <span className="checkmark"></span>
                         </label>
                     ))}
