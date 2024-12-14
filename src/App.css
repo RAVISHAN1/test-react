@@ -38,9 +38,9 @@
 /* Template default CSS
 /*----------------------------------------*/
 
-@import url('https://fonts.googleapis.com/css2?family=Cookie&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
+@import url("https://fonts.googleapis.com/css2?family=Cookie&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css");
 
 html,
 body {
@@ -1614,6 +1614,12 @@ ol {
 }
 
 .pagination__option a:hover {
+    background: #0d0d0d;
+    border-color: #0d0d0d;
+    color: #ffffff;
+}
+
+.pagination__option a.active {
     background: #0d0d0d;
     border-color: #0d0d0d;
     color: #ffffff;

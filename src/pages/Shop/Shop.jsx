@@ -6,7 +6,7 @@ import { useSearchParams } from "react-router-dom";
 
 function Shop() {
     const [products, setProducts] = useState([]);
-    const [page, setPage] = useState(1);
+    const [pagination, setPagination] = useState({ currentPage: 1, totalPages: 1 });
     const [filters, setFilters] = useState({
         categories: [],
         sizes: [],
@@ -35,20 +35,31 @@ function Shop() {
         // console.log(urlFilters);
     }, [searchParams]);
 
-    // Fetch products based on filters
+    // Fetch products on page change
     useEffect(() => {
         const fetchProducts = async (page) => {
             try {
                 const response = await getProductsList(page);
-                // console.log(response);
                 setProducts(response.products);
+                setPagination({
+                    currentPage: response.currentPage,
+                    totalPages: response.totalPages,
+                });
             } catch (error) {
                 console.error("Error fetching products:", error);
             }
         };
 
-        fetchProducts();
-    }, [filters]);
+        const page = parseInt(searchParams.get("page")) || 1;
+        fetchProducts(page);
+    }, [searchParams]);
+
+    // Handle page change
+    const handlePageChange = (page) => {
+        const params = new URLSearchParams(searchParams);
+        params.set("page", page);
+        setSearchParams(params);
+    };
 
     // Update filters and URL on sidebar changes
     const updateFilters = (newFilters) => {
@@ -152,14 +163,88 @@ function Shop() {
                                     </div>
                                 ))}
                                 <div className="col-lg-12 text-center">
+                                    {/* <div className="pagination__option">
+                                        {Array.from({ length: pagination.totalPages }).map((_, index) => (
+                                            <a
+                                                key={index}
+                                                href="#"
+                                                className={pagination.currentPage === index + 1 ? "active" : ""}
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    handlePageChange(index + 1);
+                                                }}
+                                            >
+                                                {index + 1}
+                                            </a>
+                                        ))}
+                                    </div> */}
+
                                     <div className="pagination__option">
-                                        <a href="#">1</a>
-                                        <a href="#">2</a>
-                                        <a href="#">3</a>
-                                        <a href="#">
-                                            <i className="fa fa-angle-right"></i>
+                                        {/* Previous Arrow */}
+                                        <a
+                                            href="#"
+                                            className={pagination.currentPage === 1 ? "disabled" : ""}
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                if (pagination.currentPage > 1) handlePageChange(pagination.currentPage - 1);
+                                            }}
+                                        >
+                                            &lt;
+                                        </a>
+
+                                        {/* Pagination Numbers */}
+                                        {Array.from({ length: pagination.totalPages }).map((_, index) => {
+                                            const page = index + 1;
+
+                                            // Show first two, last two, and two around the current page
+                                            if (
+                                                page === 1 ||
+                                                page === pagination.totalPages ||
+                                                (page >= pagination.currentPage - 2 && page <= pagination.currentPage + 2)
+                                            ) {
+                                                return (
+                                                    <a
+                                                        key={index}
+                                                        href="#"
+                                                        className={pagination.currentPage === page ? "active" : ""}
+                                                        onClick={(e) => {
+                                                            e.preventDefault();
+                                                            handlePageChange(page);
+                                                        }}
+                                                    >
+                                                        {page}
+                                                    </a>
+                                                );
+                                            }
+
+                                            // Add ellipsis
+                                            if (
+                                                (page === pagination.currentPage - 3 && page !== 1) ||
+                                                (page === pagination.currentPage + 3 && page !== pagination.totalPages)
+                                            ) {
+                                                return (
+                                                    <span key={index} className="ellipsis">
+                                                        ...
+                                                    </span>
+                                                );
+                                            }
+
+                                            return null; // Skip pages outside the range
+                                        })}
+
+                                        {/* Next Arrow */}
+                                        <a
+                                            href="#"
+                                            className={pagination.currentPage === pagination.totalPages ? "disabled" : ""}
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                if (pagination.currentPage < pagination.totalPages) handlePageChange(pagination.currentPage + 1);
+                                            }}
+                                        >
+                                            &gt;
                                         </a>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
