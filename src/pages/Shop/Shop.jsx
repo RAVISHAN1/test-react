@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ShopSidebar from "./ShopSidebar";
+import ShopFilter from "./ShopFilter";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import { getProductsList } from "../../api/testing/products";
 import { useSearchParams } from "react-router-dom";
@@ -69,7 +69,7 @@ function Shop() {
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-3 col-md-3">
-                            <ShopSidebar filters={filters} setFilters={setFilters} setSearchParams={setSearchParams} />
+                            <ShopFilter filters={filters} setFilters={setFilters} setSearchParams={setSearchParams} />
                         </div>
                         <div className="col-lg-9 col-md-9">
                             <div className="row">

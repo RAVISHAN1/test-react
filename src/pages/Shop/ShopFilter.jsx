@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getProductsCategories } from "../../api/testing/productsFilters";
 
-const ShopSidebar = ({ filters, setFilters, setSearchParams }) => {
+const ShopFilter = ({ filters, setFilters, setSearchParams }) => {
     const [categories, setCategories] = useState([]);
     const [sizes, setSizes] = useState([]);
     const [colors, setColors] = useState([]);
@@ -180,4 +180,4 @@ const ShopSidebar = ({ filters, setFilters, setSearchParams }) => {
     );
 };
 
-export default ShopSidebar;
+export default ShopFilter;
